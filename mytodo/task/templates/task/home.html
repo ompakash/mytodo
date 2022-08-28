@@ -1,0 +1,86 @@
+{% extends 'task/base.html' %}
+
+{% block title %}
+Home Page
+{% endblock title %}
+
+{% block content %}
+
+<div class="container text-center">
+    <h1>MY TO-DO </h1> <br>
+
+    <form method="POST">
+        <div class="mb-3">
+            {% csrf_token %}
+            <h3>Create New Task {{form.name}}</h3>
+            <input type="submit" name="" class="btn btn-primary">
+
+        </div>
+
+    </form>
+    <br>
+
+    
+    <div class="row">
+        <div class="col-6 col-md-3">
+            <h3>Task</h3><br>
+        </div>
+
+
+        <div class="col-6 col-md-2">
+            <h3>Status</h3><br>
+        </div>
+
+
+        <div class="col-6 col-md-3">
+            <h3>Creation Time</h3><br>
+        </div>
+
+        <div class="col-6 col-md-2">
+            <h3>Delete</h3><br>
+        </div>
+
+        <div class="col-6 col-md-2">
+            <h3>Update</h3><br>
+        </div>
+    </div>
+
+
+    {% for single_task in tasks %}
+    
+    
+    <div class="row mb-2">
+        <div class="col-6 col-md-3">
+            {% if single_task.complete == True %}
+            <strike>{{single_task.name}}</strike>
+            {% else %}
+            <h6>{{single_task.name}}</h6>
+            {% endif %}
+        </div>
+
+
+        <div class="col-6 col-md-2">
+            <h6>{{single_task.complete}}</h6>
+        </div>
+
+
+        <div class="col-6 col-md-3">
+            <h6>{{single_task.created}}</h6>
+        </div>
+
+        <div class="col-6 col-md-2">
+            <a href="{% url 'delete' single_task.id %}" class="btn btn-danger">Delete</a>
+        </div>
+
+        <div class="col-6 col-md-2">
+            <a href="{% url 'update' single_task.id %}" class="btn btn-primary">Update</a>
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+
+</div>
+
+{% endblock content %}
